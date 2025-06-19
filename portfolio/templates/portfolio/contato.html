@@ -1,0 +1,79 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Contato - Henrique Veloso{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <h2 class="text-center section-title">Entre em Contato</h2>
+        <p class="text-center lead mb-5">Ficarei feliz em ouvir você! Envie uma mensagem ou conecte-se pelas redes sociais.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9">
+                {% if mensagem_sucesso %}
+                    <div class="alert alert-{% if 'sucesso' in mensagem_sucesso %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+                        {{ mensagem_sucesso }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+
+                <form method="post" class="p-4 border rounded shadow-sm bg-white">
+                    {% csrf_token %} 
+                    <div class="mb-3">
+                        <label for="id_nome" class="form-label">Nome:</label>
+                        {{ form.nome }}
+                        {% if form.nome.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.nome.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email:</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.email.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_assunto" class="form-label">Assunto:</label>
+                        {{ form.assunto }}
+                        {% if form.assunto.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.assunto.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_mensagem" class="form-label">Mensagem:</label>
+                        {{ form.mensagem }}
+                        {% if form.mensagem.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.mensagem.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg mt-3">Enviar Mensagem <i class="fas fa-paper-plane ms-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <h3 class="section-title">Ou conecte-se:</h3>
+            {% if info_pessoal.linkedin_url %}
+                <a href="{{ info_pessoal.linkedin_url }}" target="_blank" class="btn btn-outline-primary btn-lg me-3"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+            {% endif %}
+            {% if info_pessoal.github_url %}
+                <a href="{{ info_pessoal.github_url }}" target="_blank" class="btn btn-outline-dark btn-lg"><i class="fab fa-github me-2"></i>GitHub</a>
+            {% endif %}
+            <p class="mt-4">Email: {{ info_pessoal.email_contato|default:'seu.email@exemplo.com' }}</p>
+            {% if info_pessoal.telefone_contato %}
+                <p>Telefone: {{ info_pessoal.telefone_contato }}</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

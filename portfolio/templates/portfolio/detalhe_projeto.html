@@ -1,0 +1,69 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_filters %} 
+
+{% block title %}{{ projeto.titulo }} - Portfólio{% endblock %}
+
+{% block extra_head %}
+    <meta name="description" content="{{ projeto.descricao_curta }}">
+    <meta name="keywords" content="{{ projeto.tecnologias_usadas }}, {{ projeto.titulo }}, Henrique Veloso, Portfólio, Desenvolvimento"> 
+
+    <meta property="og:title" content="{{ projeto.titulo }} - Portfólio de Henrique Veloso">
+    <meta property="og:description" content="{{ projeto.descricao_curta }}">
+    {# Substituir pelo domínio real do site #}
+    <meta property="og:url" content="https://seusite.com.br{% url 'portfolio:detalhe_projeto' projeto.slug %}">
+    {% if projeto.imagem_principal %}
+        <meta property="og:image" content="https://seusite.com.br{{ projeto.imagem_principal.url }}">
+    {% else %}
+        <meta property="og:image" content="https://seusite.com.br{% static 'img/default_project.png' %}">
+    {% endif %}
+    <meta property="og:image:alt" content="Imagem do projeto {{ projeto.titulo }}">
+    <meta property="og:type" content="article"> 
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ projeto.titulo }} - Portfólio de Henrique Veloso">
+    <meta name="twitter:description" content="{{ projeto.descricao_curta }}">
+    {% if projeto.imagem_principal %}
+        <meta name="twitter:image" content="https://seusite.com.br{{ projeto.imagem_principal.url }}">
+    {% else %}
+        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/default_project.png' %}">
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="section-title text-center mb-4">{{ projeto.titulo }}</h1>
+                {% if projeto.imagem_principal %}
+                    <img src="{{ projeto.imagem_principal.url }}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ projeto.titulo }}">
+                {% else %}
+                    <img src="{% static 'img/default_project.png' %}" class="img-fluid rounded mb-4 shadow-sm" alt="Imagem Padrão de Projeto">
+                {% endif %}
+
+                <h3 class="mb-3">Sobre o Projeto</h3>
+                <p class="lead">{{ projeto.descricao_curta }}</p>
+                <p>{{ projeto.descricao_longa|linebreaksbr }}</p>
+
+                <h4 class="mt-4">Tecnologias Utilizadas</h4>
+                <p class="mb-4">
+                    {% for tech in projeto.tecnologias_usadas|split_string:"," %}
+                        <span class="badge bg-secondary text-white p-2 m-1">{{ tech }}</span>
+                    {% endfor %}
+                </p>
+
+                <div class="project-links mt-4">
+                    {% if projeto.link_projeto %}
+                        <a href="{{ projeto.link_projeto }}" target="_blank" class="btn btn-primary me-3"><i class="fas fa-external-link-alt me-2"></i>Ver Projeto Online</a>
+                    {% endif %}
+                    {% if projeto.link_github %}
+                        <a href="{{ projeto.link_github }}" target="_blank" class="btn btn-dark"><i class="fab fa-github me-2"></i>Ver no GitHub</a>
+                    {% endif %}
+                </div>
+
+                <div class="mt-5 text-center">
+                    <a href="{% url 'portfolio:lista_projetos' %}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Voltar para o Portfólio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

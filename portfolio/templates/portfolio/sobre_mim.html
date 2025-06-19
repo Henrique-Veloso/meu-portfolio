@@ -1,0 +1,110 @@
+{% extends 'portfolio/base.html' %} 
+{% load static %}
+
+{% block title %}Sobre Mim - Henrique Veloso{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <h2 class="text-center section-title">Sobre Mim</h2>
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                {% if info_pessoal.foto_perfil %}
+                    <img src="{{ info_pessoal.foto_perfil.url }}" class="rounded-circle mb-3" alt="{{ info_pessoal.nome_completo }}" width="150" height="150" style="object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'img/default_profile.png' %}" class="rounded-circle mb-3" alt="Foto de Perfil Padrão" width="150" height="150" style="object-fit: cover;">
+                {% endif %}
+                <h3 class="mt-3">{{ info_pessoal.nome_completo|default:"Seu Nome" }}</h3>
+                <p class="lead">{{ info_pessoal.titulo_profissional|default:"Sua Posição" }}</p>
+                <p>{{ info_pessoal.resumo_longo|default:"Conte mais sobre sua trajetória profissional, o que te motiva e seus objetivos."|linebreaksbr }}</p>
+                
+                {% if info_pessoal.cv_pdf %}
+                    <div class="mt-4">
+                        <a href="{{ info_pessoal.cv_pdf.url }}" target="_blank" class="btn btn-success btn-lg"><i class="fas fa-file-download me-2"></i>Baixar CV em PDF</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section class="py-3">
+        <h2 class="text-center section-title">Experiências Profissionais</h2>
+        <div class="row">
+            {% if experiencias %}
+                {% for exp in experiencias %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ exp.cargo }} <small class="text-muted">na {{ exp.empresa }}</small></h5>
+                                <p class="card-text text-muted">{{ exp.local }} | {{ exp.data_inicio|date:"M Y" }} - {% if exp.data_fim %}{{ exp.data_fim|date:"M Y" }}{% else %}Atual{% endif %}</p>
+                                <p class="card-text">{{ exp.descricao|linebreaksbr }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center"><p class="lead">Nenhuma experiência profissional para exibir ainda.</p></div>
+            {% endif %}
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section class="py-3">
+        <h2 class="text-center section-title">Formação Acadêmica e Certificados</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h3>Formação Acadêmica</h3>
+                {% if formacoes %}
+                    {% for form in formacoes %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ form.curso }}</h5>
+                                <p class="card-text text-muted">{{ form.instituicao }} | {{ form.data_inicio|date:"Y" }} - {% if form.data_fim %}{{ form.data_fim|date:"Y" }}{% else %}Em Andamento{% endif %}</p>
+                                {% if form.descricao %}<p class="card-text small">{{ form.descricao|linebreaksbr }}</p>{% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center lead">Nenhuma formação acadêmica para exibir ainda.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-4">
+                <h3>Certificados</h3>
+                {% if certificados %}
+                    {% for cert in certificados %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ cert.nome_certificado }}</h5>
+                                <p class="card-text text-muted">{{ cert.instituicao_emissora }} ({{ cert.ano_conclusao }})</p>
+                                {% if cert.link_credencial %}
+                                    <a href="{{ cert.link_credencial }}" target="_blank" class="btn btn-sm btn-outline-info mt-2">Ver Credencial</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center lead">Nenhum certificado para exibir ainda.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section class="py-3">
+        <h2 class="text-center section-title">Habilidades</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                {% if habilidades %}
+                    {% for habilidade in habilidades %}
+                        <span class="badge bg-primary text-white p-2 m-2">{{ habilidade.nome }} {% if habilidade.nivel_ou_conhecimento %}<small>({{ habilidade.nivel_ou_conhecimento }})</small>{% endif %}</span>
+                    {% endfor %}
+                {% else %}
+                    <p class="lead">Nenhuma habilidade para exibir ainda.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
