@@ -6,11 +6,7 @@
 {% block content %}
     <section class="hero-section py-5 text-center">
         <div class="container">
-            {% if info_pessoal.foto_perfil %}
-                <img src="{{ info_pessoal.foto_perfil.url }}" class="rounded-circle mb-4" alt="{{ info_pessoal.nome_completo }}" width="180" height="180" style="object-fit: cover;">
-            {% else %}
-                <img src="{% static 'img/default_profile.png' %}" class="rounded-circle mb-4" alt="Foto de Perfil Padrão" width="180" height="180" style="object-fit: cover;"> 
-            {% endif %}
+            <img src="{% static 'img/Henrique_Veloso.jpg' %}" class="rounded-circle mb-4" alt="Henrique Veloso" width="180" height="180" style="object-fit: cover;">
             <h1 class="display-4">{{ info_pessoal.nome_completo|default:"Seu Nome" }}</h1>
             <p class="lead">{{ info_pessoal.titulo_profissional|default:"Seu Título Profissional" }}</p>
             <p class="mt-3">{{ info_pessoal.resumo_curto|default:"Um breve resumo sobre você e o que faz." }}</p>
@@ -29,11 +25,15 @@
                     {% for projeto in projetos_destaque %}
                         <div class="col">
                             <div class="card h-100">
-                                {% if projeto.imagem_principal %}
-                                    <img src="{{ projeto.imagem_principal.url }}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
-                                {% else %}
-                                    <img src="{% static 'img/default_project.png' %}" class="card-img-top" alt="Imagem Padrão de Projeto" style="height: 200px; object-fit: cover;">
-                                {% endif %}
+                            {% if "Site Currículo" in projeto.titulo %}
+                                <img src="{% static 'img/Image_1.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
+                            {% elif "Projeto Grande Time" in projeto.titulo %}
+                                <img src="{% static 'img/Image_2.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
+                            {% elif "Projeto Lare Laboratório" in projeto.titulo %}
+                                <img src="{% static 'img/Image_2.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
+                            {% else %}
+                                <img src="{% static 'img/default_project.png' %}" class="card-img-top" alt="Imagem Padrão de Projeto" style="height: 200px; object-fit: cover;">
+                            {% endif %}
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">{{ projeto.titulo }}</h5>
                                     <p class="card-text">{{ projeto.descricao_curta }}</p>

@@ -10,12 +10,20 @@
 
     <meta property="og:title" content="{{ projeto.titulo }} - Portfólio de Henrique Veloso">
     <meta property="og:description" content="{{ projeto.descricao_curta }}">
-    {# Substituir pelo domínio real do site #}
     <meta property="og:url" content="https://seusite.com.br{% url 'portfolio:detalhe_projeto' projeto.slug %}">
-    {% if projeto.imagem_principal %}
-        <meta property="og:image" content="https://seusite.com.br{{ projeto.imagem_principal.url }}">
+
+    {% if "Site Currículo" in projeto.titulo %}
+        <meta property="og:image" content="https://seusite.com.br{% static 'img/Image_1.webp' %}">
+        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/Image_1.webp' %}">
+    {% elif "Projeto Grande Time" in projeto.titulo %}
+        <meta property="og:image" content="https://seusite.com.br{% static 'img/Image_2.webp' %}">
+        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/Image_2.webp' %}">
+    {% elif "Projeto Lare Laboratório" in projeto.titulo %}
+        <meta property="og:image" content="https://seusite.com.br{% static 'img/Image_3.jpg' %}"> 
+        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/Image_3.jpg' %}">
     {% else %}
         <meta property="og:image" content="https://seusite.com.br{% static 'img/default_project.png' %}">
+        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/default_project.png' %}">
     {% endif %}
     <meta property="og:image:alt" content="Imagem do projeto {{ projeto.titulo }}">
     <meta property="og:type" content="article"> 
@@ -23,19 +31,20 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ projeto.titulo }} - Portfólio de Henrique Veloso">
     <meta name="twitter:description" content="{{ projeto.descricao_curta }}">
-    {% if projeto.imagem_principal %}
-        <meta name="twitter:image" content="https://seusite.com.br{{ projeto.imagem_principal.url }}">
-    {% else %}
-        <meta name="twitter:image" content="https://seusite.com.br{% static 'img/default_project.png' %}">
-    {% endif %}
+
 {% endblock %}
+
 {% block content %}
     <section class="py-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1 class="section-title text-center mb-4">{{ projeto.titulo }}</h1>
-                {% if projeto.imagem_principal %}
-                    <img src="{{ projeto.imagem_principal.url }}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ projeto.titulo }}">
+                {% if "Site Currículo" in projeto.titulo %}
+                    <img src="{% static 'img/Image_1.webp' %}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ projeto.titulo }}">
+                {% elif "Projeto Grande Time" in projeto.titulo %}
+                    <img src="{% static 'img/Image_2.webp' %}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ projeto.titulo }}">
+                {% elif "Projeto Lare Laboratório" in projeto.titulo %}
+                    <img src="{% static 'img/Image_3.jpg' %}" class="img-fluid rounded mb-4 shadow-sm" alt="{{ projeto.titulo }}"> 
                 {% else %}
                     <img src="{% static 'img/default_project.png' %}" class="img-fluid rounded mb-4 shadow-sm" alt="Imagem Padrão de Projeto">
                 {% endif %}
@@ -46,7 +55,7 @@
 
                 <h4 class="mt-4">Tecnologias Utilizadas</h4>
                 <p class="mb-4">
-                    {% for tech in projeto.tecnologias_usadas|split_string:"," %}
+                    {% for tech in projeto.tecnologias_usadas|split_string:"," %} 
                         <span class="badge bg-secondary text-white p-2 m-1">{{ tech }}</span>
                     {% endfor %}
                 </p>
