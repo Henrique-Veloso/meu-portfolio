@@ -76,8 +76,8 @@
                     {% for cert in certificados %}
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">{{ cert.nome_certificado }}</h5>
-                                <p class="card-text text-muted">{{ cert.instituicao_emissora }} ({{ cert.ano_conclusao }})</p>
+                                <h5 class="card-title">{{ cert.nome_certificacao }}</h5>
+                                <p class="card-text text-muted">{{ cert.instituicao }} ({{ cert.ano_conclusao }})</p>
                                 {% if cert.link_credencial %}
                                     <a href="{{ cert.link_credencial }}" target="_blank" class="btn btn-sm btn-outline-info mt-2">Ver Credencial</a>
                                 {% endif %}
