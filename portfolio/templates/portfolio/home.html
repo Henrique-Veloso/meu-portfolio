@@ -1,36 +1,42 @@
 {% extends 'portfolio/base.html' %} 
-{% load static %}
+{% load static %} 
+{% load portfolio_filters %} 
 
-{% block title %}Henrique Veloso - Desenvolvedor & Empreendedor{% endblock %}
+{% block title %}Henrique Veloso - Desenvolvedor & Empreendedor{% endblock %} 
 
 {% block content %}
     <section class="hero-section py-5 text-center">
         <div class="container">
-            <img src="{% static 'img/Henrique_Veloso.jpg' %}" class="rounded-circle mb-4" alt="Henrique Veloso" width="180" height="180" style="object-fit: cover;">
-            <h1 class="display-4">{{ info_pessoal.nome_completo|default:"Seu Nome" }}</h1>
-            <p class="lead">{{ info_pessoal.titulo_profissional|default:"Seu Título Profissional" }}</p>
-            <p class="mt-3">{{ info_pessoal.resumo_curto|default:"Um breve resumo sobre você e o que faz." }}</p>
-            <div class="mt-4">
+            <img src="{% static 'img/Henrique_Veloso.jpg' %}" class="rounded-circle mb-4" alt="Henrique Veloso" width="220" height="220" style="object-fit: cover;" 
+                 data-aos="zoom-in" data-aos-delay="100">
+            
+            <h1 class="display-4" data-aos="fade-up" data-aos-delay="300">{{ info_pessoal.nome_completo|default:"Seu Nome" }}</h1> 
+            
+            <p class="lead" data-aos="fade-up" data-aos-delay="500">{{ info_pessoal.titulo_profissional|default:"Seu Título Profissional" }}</p>
+            
+            <p class="mt-3" data-aos="fade-up" data-aos-delay="700">{{ info_pessoal.resumo_curto|default:"Um breve resumo sobre você e o que faz." }}</p>
+            
+            <div class="mt-4" data-aos="fade-up" data-aos-delay="900"> 
                 <a href="{% url 'portfolio:lista_projetos' %}" class="btn btn-primary btn-lg me-3">Ver Portfólio</a>
                 <a href="{% url 'portfolio:sobre_mim' %}" class="btn btn-outline-light btn-lg">Sobre Mim</a>
             </div>
         </div>
     </section>
 
-    <section class="py-5">
+    <section class="py-5" data-aos="fade-up"> 
         <div class="container">
-            <h2 class="text-center section-title mb-5">Projetos em Destaque</h2>
+            <h2 class="text-center section-title mb-5" data-aos="fade-up" data-aos-delay="100">Projetos em Destaque</h2>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% if projetos_destaque %}
                     {% for projeto in projetos_destaque %}
-                        <div class="col">
+                        <div class="col" data-aos="fade-up" data-aos-delay="{{ forloop.counter | multiply_by_200 }}"> 
                             <div class="card h-100">
                             {% if "Site Currículo" in projeto.titulo %}
                                 <img src="{% static 'img/Image_1.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
                             {% elif "Projeto Grande Time" in projeto.titulo %}
                                 <img src="{% static 'img/Image_2.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
                             {% elif "Projeto Lare Laboratório" in projeto.titulo %}
-                                <img src="{% static 'img/Image_2.webp' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
+                                <img src="{% static 'img/Image_3.jpg' %}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
                             {% else %}
                                 <img src="{% static 'img/default_project.png' %}" class="card-img-top" alt="Imagem Padrão de Projeto" style="height: 200px; object-fit: cover;">
                             {% endif %}
@@ -39,13 +45,7 @@
                                     <p class="card-text">{{ projeto.descricao_curta }}</p>
                                     <p class="card-text text-muted small">Tecnologias: {{ projeto.tecnologias_usadas }}</p>
                                     <div class="mt-auto"> 
-                                        <a href="{% url 'portfolio:detalhe_projeto' projeto.slug %}" class="btn btn-sm btn-outline-primary me-2">Ver Detalhes</a>
-                                        {% if projeto.link_projeto %}
-                                            <a href="{{ projeto.link_projeto }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Ver Projeto</a>
-                                        {% endif %}
-                                        {% if projeto.link_github %}
-                                            <a href="{{ projeto.link_github }}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fab fa-github"></i> GitHub</a>
-                                        {% endif %}
+                                        <a href="{% url 'portfolio:detalhe_projeto' projeto.slug %}" class="btn btn-primary btn-sm">Ver Detalhes <i class="fas fa-arrow-right ms-2"></i></a>
                                     </div>
                                 </div>
                             </div>
