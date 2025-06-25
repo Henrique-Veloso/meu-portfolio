@@ -95,7 +95,7 @@
             <div class="col-lg-10 text-center">
                 {% if habilidades %}
                     {% for habilidade in habilidades %}
-                        <span class="badge bg-primary text-white p-2 m-2">{{ habilidade.nome }} {% if habilidade.nivel_ou_conhecimento %}<small>({{ habilidade.nivel_ou_conhecimento }})</small>{% endif %}</span>
+                        <span class="btn btn-sm btn-outline-info me-3">{{ habilidade.nome }} {% if habilidade.nivel_ou_conhecimento %}<small>({{ habilidade.nivel_ou_conhecimento }})</small>{% endif %}</span>
                     {% endfor %}
                 {% else %}
                     <p class="lead">Nenhuma habilidade para exibir ainda.</p>
